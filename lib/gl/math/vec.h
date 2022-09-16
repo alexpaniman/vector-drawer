@@ -50,6 +50,8 @@ namespace details {
         FORWARD_OPERATOR(>>=)
         FORWARD_OPERATOR(<<=)
 
+        #undef FORWARD_OPERATOR
+
         // Get back original value, but read-only
         operator const value_type&() { return m_editable_value; }
 
