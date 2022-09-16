@@ -31,10 +31,10 @@ public:
         mgr.set_color({ 0.5f, 0.7f, 0.3f });
 
         mgr.set_axes(m_rotating_vec_axes);
-        draw_vec_with_axes(mgr, m_rotating_vec);
-
         if (get_fps()) // At the start (before enough data is collected), fps is zero
             m_rotating_vec.rotate(-0.1f / (float) get_fps());
+
+        draw_vec_with_axes(mgr, m_rotating_vec);
 
         mgr.set_axes(m_selectable_vec_axes);
         draw_vec_with_axes(mgr, m_selectable_vec);
@@ -71,6 +71,13 @@ private:
         math::vec x2 = {  1.0f,  1.0f }, x3 = {  1.0f,  -1.0f };
             
         // ==> Draw bounding box:
+
+        mgr.set_color({ 0.5f, 0.5f, 0.5f });
+
+        mgr.draw_triangle(x0, x1, x2);
+        mgr.draw_triangle(x2, x3, x0);
+
+        mgr.set_color({ 0.0f, 0.0f, 0.0f });
 
         mgr.set_width(BOUNDING_BOX_WIDTH);
 
