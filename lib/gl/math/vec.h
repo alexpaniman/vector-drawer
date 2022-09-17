@@ -23,6 +23,11 @@ namespace details {
         { vec[i] } -> std::convertible_to<element_type>;
     };
 
+    template <typename vec_type, typename element_type>
+    concept right_multipliable = requires(vec_type vec, element_type value) {
+        { vec * value };
+    };
+
     template <typename value_type, typename callback_type>
     class catch_modifications_proxy {
     public:
@@ -210,6 +215,12 @@ namespace details {
             return new_vec *= value;
         }
 
+        template <right_multipliable<element_type> other_vec>
+        friend constexpr impl_type operator*(const element_type value,
+                                             const other_vec& other) {
+            return other * value;
+        }
+
         template <typename other_vector>
         constexpr element_type dot(const other_vector& other) const {
             element_type accumulator {};
@@ -223,11 +234,11 @@ namespace details {
             return static_cast<len_type>(sqrt(this->dot(*this)));
         }
 
-        constexpr impl_type& normalize() {
+        constexpr impl_type& normalize() & {
             return (*this) *= (static_cast<len_type>(1) / len());
         }
 
-        constexpr impl_type& rotate(double angle) {
+        constexpr impl_type& rotate(double angle) & {
             static_assert(count == 2, "Rotation for now is impemented only for 2D case!");
 
             x() = static_cast<element_type>(cos(angle) * x() - sin(angle) * y());
@@ -349,8 +360,6 @@ namespace math {
     // Use shorthands from OpenGL
     using vec2 = vec<float, 2>;
     using vec3 = vec<float, 3>;
-
-    using dvec2 = vec<double, 2>;
-    using dvec3 = vec<double, 3>;
+    using vec4 = vec<float, 4>;
 
 };
