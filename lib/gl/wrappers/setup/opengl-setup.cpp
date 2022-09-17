@@ -213,6 +213,8 @@ namespace gl {
 
         if (glewInit() != GLEW_OK)
             throw std::runtime_error("Failed to initialize glew!");
+
+        glEnable(GL_BLEND); // Allow transparency
     }
     
     void window::bind() const {

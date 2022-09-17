@@ -16,7 +16,7 @@ namespace gl {
         void setup() override final {
             m_gradient_shader.from_file("res/mandelbrot.glsl");
             m_verticies.set_layout(math::vector_layout<float, 2>() +
-                                   math::vector_layout<float, 3>());
+                                   math::vector_layout<float, 4>());
         }
 
         void draw()  override final {
